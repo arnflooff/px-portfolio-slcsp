@@ -9,9 +9,9 @@ VS Code and Node.js
 1. clone or download the repository
 2. open a terminal
 3. cd into the repository directory e.g. cd px-portfolio-slcsp
-4. run the following command to install the node modules:
+4. run the following command to install the node modules:  
    npm install
-5. run the code using the following command:
+5. run the code using the following command:  
    node .
 
 ### Notes
