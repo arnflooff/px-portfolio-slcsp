@@ -18,7 +18,8 @@ fs.createReadStream(path.join(dataDir, 'zips.csv'))
     } // e.g. '36005' has 'AL 13' 3 times
   })
   .on('end', () => {
-    console.log(zips.size); // 38804
+    // console.log(zips.size); // 38804
+    onEndAll();
   });
 
 const plans = new Map(); // e.g. {'GA 7': [298.62, 285.07, ...], ...}
@@ -34,5 +35,43 @@ fs.createReadStream(path.join(dataDir, 'plans.csv'))
     plans.get(rateArea).add(parseFloat(data.rate));
   })
   .on('end', () => {
-    console.log(plans.size);
+    // console.log(plans.size); // 411
+    onEndAll();
   });
+
+let nEndAll = 0;
+function onEndAll() {
+  if (++nEndAll < 2) {
+    return;
+  }
+
+  // log column headers
+  console.log('zipcode,rate');
+
+  fs.createReadStream(path.join(dataDir, 'slcsp.csv'))
+    .pipe(csv())
+    .on('data', (data) => {
+      const zipcode = data.zipcode;
+      let slcsp;
+      if (!zips.has(zipcode)) {
+        slcsp = '';
+      } else {
+        const rateArea = zips.get(zipcode);
+        if (plans.has(rateArea)) {
+          const rates = Array.from(plans.get(rateArea));
+          rates.sort((a, b) => a - b);
+          if (rates.length < 2) {
+            slcsp = '';
+          } else {
+            slcsp = rates[1].toFixed(2);
+          }
+        } else {
+          slcsp = '';
+        }
+      }
+      console.log(`${zipcode},${slcsp}`);
+    })
+    .on('end', () => {
+      // console.log('the end');
+    });
+}
