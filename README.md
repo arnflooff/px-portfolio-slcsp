@@ -16,4 +16,4 @@ VS Code and Node.js
 
 ### Notes
 
-plans.csv, slcsp.csv, and zips.csv are located in the data subdirectory.
+`plans.csv`, `slcsp.csv`, and `zips.csv` are located in the `data` subdirectory.
