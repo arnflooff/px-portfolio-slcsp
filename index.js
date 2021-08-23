@@ -74,3 +74,9 @@ function onEndAll() {
       // console.log('the end');
     });
 }
+/*
+notes
+zipcode 67118 is in 4 different counties but only 1 rate_area 'KS 6'
+rateArea 'KY 8' (zipcode 40813) doesn't seem to have a plan
+zipcode 36272 has multiple rateAreas
+*/
